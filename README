@@ -1,0 +1,35 @@
+Détermination des valeurs propres d'une matrice à l'aide de la méthode IRAM (Implicitly Restarted Arnoldi Method). Utilisation de MPI, OpenMP et LAPACK.
+
+Compilation:
+  make
+
+Nettoyer le répertoire du projet:
+  make clean
+
+Exécution:
+  export OMP_NUM_THREADS=<n_threads>; mpiexec -n <n_proc> ./parallel_IRAM <fichier_mtx> <n_eigen_values> [qt_iter]
+  <n_threads>: nombre de threads OpenMP
+  <n_proc>: <nombre de processus MPI>
+  <fichier_mtx>: fichier de matrice au format mtx
+  <n_eigen_values>: nombre des valeurs propres à chercher
+  [qr_iter]: paramètre optionnel. Si précisé, le programme utilisera l'algorithme QR pour déterminer les valeurs propres à chaque itération de IRAM et fera qr_iter itérations dans l'algorithme QR. Si non précisé, le programme utilisera les fonctions de LAPACK pour déterminer les valeurs propres à chaque itération de IRAM.
+
+Fichiers de matrice:
+  Trois fichiers de matrice sont disponibles.
+  Les deux premières matrices ont des valeurs propres réelles et ont servi a vérifier les résultats. La dernière a servi à effectuer les benchmarks.
+  seq_1_100.mtx de taille 10x10 dont les valeurs propres sont approximativement 520.8398, -15.8398 et 8 fois 0:
+                  1   2   3   4   5   6   7   8   9   10
+                  11  12  13  14  15  16  17  18  19  20
+                  21  22  23  24  25  26  27  28  29  30
+                  31  32  33  34  35  36  37  38  39  40
+                  41  42  43  44  45  46  47  48  49  50
+                  51  52  53  54  55  56  57  58  59  60
+                  61  62  63  64  65  66  67  68  69  70
+                  71  72  73  74  75  76  77  78  79  80
+                  81  82  83  84  85  86  87  88  89  90
+                  91  92  93  94  95  96  97  98  99  100
+  mat_8_8.mtx de taille 8x8 dont les valeurs propres sont 80000000, 8000000, 800000, 80000, 8000, 800, 80 et 8.
+  bcsstk08.mtx est la matrice ayant servi aux benchmarks.
+
+ANSI C library for Matrix Market I/O (fichiers mmioc.c et mmio.h):
+  L'ANSI C library for Matrix Market I/O du National Institute of Standards and Technology du Département du Commerce des Etats-Unis a été utilisée pour lire les fichiers mtx.
